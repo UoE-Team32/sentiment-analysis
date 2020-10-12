@@ -2,6 +2,8 @@
 
 > It is important to know that this is just purely proof-of-concept and a way for me to have a play with Python and the Tweepy library.
 
+![](showcase/stats.png)
+
 ## Setup and Configuration
 ```bash
 $ git clone https://github.com/jackcoble/sentiment-analysis.git
