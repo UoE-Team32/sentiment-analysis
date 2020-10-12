@@ -1,5 +1,7 @@
 import tweepy
 import os
+import re
+from textblob import TextBlob
 from dotenv import load_dotenv
 
 # Load .env file and associated vars
@@ -26,7 +28,14 @@ class StreamListener(tweepy.StreamListener):
         if status.lang != "en":
             return
 
-        print(status.text)
+        # Analyse the tweet
+        analysis = TextBlob(status.text)
+        if analysis.sentiment.polarity > 0: 
+            print('ID: ' + status.id_str + ', Polarity: Positive')
+        elif analysis.sentiment.polarity == 0: 
+            print('ID: ' + status.id_str + ', Polarity: Neutral')
+        else: 
+            print('ID: ' + status.id_str + ', Polarity: Negative')
 
 streamListener = StreamListener()
 myStream = tweepy.Stream(auth = api.auth, listener=streamListener)
