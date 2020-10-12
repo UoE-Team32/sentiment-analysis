@@ -28,14 +28,21 @@ class StreamListener(tweepy.StreamListener):
         if status.lang != "en":
             return
 
+        # Check there is the place attribute
+        # Quick hack to set location
+        location = "N/A"
+        if hasattr(status.place, 'id'):
+            place = api.geo_id(status.place.id)
+            location = place.country
+
         # Analyse the tweet
         analysis = TextBlob(status.text)
         if analysis.sentiment.polarity > 0: 
-            print('ID: ' + status.id_str + ', Polarity: Positive')
+            print('ID: ' + status.id_str + ', Polarity: Positive, Location: ' + location)
         elif analysis.sentiment.polarity == 0: 
-            print('ID: ' + status.id_str + ', Polarity: Neutral')
+            print('ID: ' + status.id_str + ', Polarity: Neutral, Location: ' + location)
         else: 
-            print('ID: ' + status.id_str + ', Polarity: Negative')
+            print('ID: ' + status.id_str + ', Polarity: Negative, Location: ' + location)
 
 streamListener = StreamListener()
 myStream = tweepy.Stream(auth = api.auth, listener=streamListener)
