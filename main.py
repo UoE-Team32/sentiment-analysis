@@ -17,6 +17,10 @@ api = tweepy.API(auth)
 
 # Begin streaming
 class StreamListener(tweepy.StreamListener):
+    def on_error(self, status_code):
+        if status_code == 420:
+            return False
+
     def on_status(self, status):
         print(status.text)
 
