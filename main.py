@@ -22,6 +22,10 @@ class StreamListener(tweepy.StreamListener):
             return False
 
     def on_status(self, status):
+        # Only filter tweets containing English language
+        if status.lang != "en":
+            return
+
         print(status.text)
 
 streamListener = StreamListener()
